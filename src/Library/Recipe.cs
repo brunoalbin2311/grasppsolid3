@@ -11,6 +11,13 @@ namespace Full_GRASP_And_SOLID
 {
     public class Recipe : IRecipeContent // Modificado por DIP
     {
+        public Recipe ()
+        {
+            Cooked = false;
+        }
+
+        public bool Cooked { get; set;}
+
         // Cambiado por OCP
         private IList<BaseStep> steps = new List<BaseStep>();
 
@@ -61,6 +68,20 @@ namespace Full_GRASP_And_SOLID
             }
 
             return result;
+        }
+        public int GetCookTime()
+        {
+            int timer = 0;
+            foreach (BaseStep step in this.steps)
+            {
+                timer += step.Time;
+            }
+            return timer;
+        }
+
+        public void Cook()
+        {
+            TimeRecipe cliente = new TimeRecipe(this,GetCookTime());
         }
     }
 }
